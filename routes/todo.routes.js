@@ -5,6 +5,4 @@ router.get('/', (req, res) => {
     res.send('Your main route is working')
 })
 
-
-
 module.exports = router;
