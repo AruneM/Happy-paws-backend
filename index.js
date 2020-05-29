@@ -19,6 +19,7 @@ app.set('views', __dirname + '/views');
 
 // Set up the middleware to make the files inside the public folder
 // available throughout the app
+console.log(__dirname + '/public')
 app.use(express.static(__dirname + '/public'))
 
 //Register partials
@@ -28,7 +29,6 @@ hbs.registerPartials(__dirname + '/views/partials');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 //Register routes
 const todoRoutes = require('./routes/todo.routes');
 app.use('/', todoRoutes);
@@ -37,3 +37,16 @@ app.use('/', todoRoutes);
 app.listen(3000, '127.0.0.1', () => {
     console.log('Server is running')
 })
+
+
+//Building a todo application
+
+
+// Step 3 pages
+  // Landing/Home page
+  // Show all todos page
+
+//create a todo
+//show all todos
+// edit a todo
+// delete a todo

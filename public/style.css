@@ -1,0 +1,22 @@
+
+body {
+    background-color: darkturquoise;
+}
+
+.form-container {
+    width: 300px;
+    margin: 30px;
+    padding: 10px;
+}
+
+.todo-container {
+    width: 300px;
+    margin: 30px;
+    padding: 10px;
+}
+
+.todo-element {
+    border: 1px solid darkslategray;
+    padding: 5px;
+    margin-bottom: 10px;
+}

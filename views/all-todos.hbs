@@ -1,0 +1,9 @@
+<div class="todo-container">
+    {{#each todos}}
+        <a href="/todo/{{this._id}}">
+            <div class="todo-element">
+                <p>{{this.name}}</p>
+            </div>
+        </a>
+    {{/each}}   
+</div>
