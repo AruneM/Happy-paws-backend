@@ -1,0 +1,26 @@
+{
+  "name": "mongoose-express-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManishPoduval/mongoose-express-starter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManishPoduval/mongoose-express-starter/issues"
+  },
+  "homepage": "https://github.com/ManishPoduval/mongoose-express-starter#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "mongoose": "^5.9.16",
+    "nodemon": "^2.0.4"
+  }
+}
