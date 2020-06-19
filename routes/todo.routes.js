@@ -3,92 +3,73 @@ const router = express.Router()
 
 let TodoModel = require('../models/Todo.model')
 
-router.get('/', (req, res) => {
-    res.render('landing.hbs')
-})
-
-router.get('/all-todos', (req, res) => {
-    
-    TodoModel.find()
-       .then((todos) => {
-            console.log(todos)
-            res.render('all-todos.hbs', {todos})
-       })
-       .catch(() => {
-            res.send('Something went wrong')
-       })
-
-})
-
-router.get('/create', (req, res) => {
-    res.render('create.hbs')
+router.get('/todos', (req, res) => {
+     TodoModel.find()
+          .then((todos) => {
+               res.status(200).json(todos)
+          })
+          .catch((err) => {
+               res.status(500).json({
+                    error: 'Something went wrong',
+                    message: err
+               })
+          })         
 })
 
 router.post('/create', (req, res) => {  
-    const {name, description} = req.body;
-
-    TodoModel.create({name: name, description: description})
-        .then((response) => {
-            res.render('create.hbs', {showSuccessMessage: true})
-        })
-        .catch(() => {
-            res.render('create.hbs', {showFailureMessage: true})
-        })
+    const {name, description, completed} = req.body;
+    TodoModel.create({name: name, description: description, completed: completed})
+          .then((response) => {
+               res.status(200).json(response)
+          })
+          .catch((err) => {
+               res.status(500).json({
+                    error: 'Something went wrong',
+                    message: err
+               })
+          })  
 })
 
-
-
-router.get('/todo/:myId', (req, res) => {
-
+router.get('/todos/:myId', (req, res) => {
     TodoModel.findById(req.params.myId)
-      .then((todo) => {
-        res.render('todo.hbs', {todo})
-      })
-      .catch(() => {
-        res.send('Something went wrong')
-      })
+     .then((response) => {
+          res.status(200).json(response)
+     })
+     .catch((err) => {
+          res.status(500).json({
+               error: 'Something went wrong',
+               message: err
+          })
+     }) 
 })
 
-
-
-router.get('/todo/:id/delete', (req, res) => {
-
+router.delete('/todos/:id/delete', (req, res) => {
     TodoModel.findByIdAndDelete(req.params.id)
-       .then(() => {
-            res.redirect('/all-todos')
-       })
-       .catch(() => {
-            res.send('Something went wrong')
-       })
-
+          .then((response) => {
+               res.status(200).json(response)
+          })
+          .catch((err) => {
+               res.status(500).json({
+                    error: 'Something went wrong',
+                    message: err
+               })
+          })  
 })
 
-
-router.get('/todo/:id/edit', (req, res) => {
-
-    TodoModel.findById(req.params.id)
-       .then((todo) => {
-            res.render('edit.hbs', {todo} )
-       })
-       .catch(() => {
-            res.send('Something went wrong')
-       })
-
-})
-
-router.post('/todo/:id/edit', (req, res) => {
+router.patch('/todos/:id/edit', (req, res) => {
     let id = req.params.id
-    const {name, description} = req.body;
-    TodoModel.findByIdAndUpdate(id, {$set: {name: name, description: description}})
-       .then(() => {
-            res.redirect('/all-todos')
-       })
-       .catch(() => {
-            res.send('Something went wrong')
-       })
-
+    const {name, description, completed} = req.body;
+    TodoModel.findByIdAndUpdate(id, {$set: {name: name, description: description, completed: completed}})
+          .then((response) => {
+               res.status(200).json(response)
+          })
+          .catch((err) => {
+               console.log(err)
+               res.status(500).json({
+                    error: 'Something went wrong',
+                    message: err
+               })
+          }) 
 })
-
-
 
 module.exports = router;
