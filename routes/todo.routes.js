@@ -18,6 +18,7 @@ router.get('/todos', (req, res) => {
 
 router.post('/create', (req, res) => {  
     const {name, description, completed} = req.body;
+    console.log(req.body)
     TodoModel.create({name: name, description: description, completed: completed})
           .then((response) => {
                res.status(200).json(response)
@@ -43,7 +44,7 @@ router.get('/todos/:myId', (req, res) => {
      }) 
 })
 
-router.delete('/todos/:id/delete', (req, res) => {
+router.delete('/todos/:id', (req, res) => {
     TodoModel.findByIdAndDelete(req.params.id)
           .then((response) => {
                res.status(200).json(response)
@@ -56,7 +57,7 @@ router.delete('/todos/:id/delete', (req, res) => {
           })  
 })
 
-router.patch('/todos/:id/edit', (req, res) => {
+router.patch('/todos/:id', (req, res) => {
     let id = req.params.id
     const {name, description, completed} = req.body;
     TodoModel.findByIdAndUpdate(id, {$set: {name: name, description: description, completed: completed}})
