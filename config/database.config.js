@@ -5,7 +5,10 @@ let configOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true 
 }
-mongoose.connect('mongodb://localhost:27017/ReactTodos', configOptions)
+
+let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ReactTodos'
+
+mongoose.connect(MONGODB_URI, configOptions)
     .then(() => {
         console.log('Yayyy Database is connected');
     })
