@@ -50,17 +50,17 @@ app.use(bodyParser.json()) //crucial for post requests from client
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use((req, res, next) => {
-    // If no routes match, send them the React HTML.
-    res.sendFile(__dirname + "/public/index.html");
-  });
-
 //Register routes
 const todoRoutes = require('./routes/todo.routes');
 app.use('/api', todoRoutes);
 
 const authRoutes = require('./routes/auth.routes')
 app.use('/api', authRoutes);
+
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 //Start the server to begin listening on a port
 // make sure you don't run it on port 3000 because 
