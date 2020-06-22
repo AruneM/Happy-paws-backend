@@ -9,7 +9,7 @@ require("dotenv").config();
 const cors = require('cors')
 app.use(cors({
     credentials: true,
-    origin: ['https://manish-todo-wdft.herokuapp.com/', 'http://localhost:3000']
+    origin: ['https://manish-todo-wdft.herokuapp.com', 'http://localhost:3000']
 }))
 
 let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ReactTodos'
