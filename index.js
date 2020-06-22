@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 //ensure database is connected
+var path = require('path');
 require('./config/database.config')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);

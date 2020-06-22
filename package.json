@@ -30,6 +30,7 @@
     "http-errors": "^1.7.3",
     "mongoose": "^5.9.16",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7"
   }
 }
