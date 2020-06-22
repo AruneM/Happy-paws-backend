@@ -47,12 +47,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()) //crucial for post requests from client
 
 
-app.use(express.static(path.join(__dirname, 'build')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use((req, res, next) => {
     // If no routes match, send them the React HTML.
-    res.sendFile(__dirname + "/build/index.html");
+    res.sendFile(__dirname + "/public/index.html");
   });
 
 //Register routes
