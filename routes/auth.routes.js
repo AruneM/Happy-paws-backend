@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 
 const UserModel = require('../models/User.model');
 
+const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
+
 router.post('/signup', (req, res) => {
     const {username, email, password } = req.body;
     console.log(username, email, password);
@@ -43,6 +45,7 @@ router.post('/signup', (req, res) => {
           .then((passwordHash) => {
             UserModel.create({email, username, passwordHash})
               .then((user) => {
+                user.passwordHash = "***";
                 req.session.loggedInUser = user;
                 console.log(req.session)
                 res.status(200).json(user);
@@ -93,9 +96,9 @@ router.post('/signin', (req, res) => {
                 //if it matches
                 if (doesItMatch) {
                   // req.session is the special object that is available to you
-                  
+                  user.passwordHash = "***";
                   req.session.loggedInUser = userData;
-                  console.log(req.session)
+                  console.log('Signin', req.session)
                   res.status(200).json(userData)
                 }
                 //if passwords do not match
@@ -131,5 +134,8 @@ router.post('/logout', (req, res) => {
     .send();
 })
 
+router.get("/user", isLoggedIn, (req, res, next) => {
+  res.status(200).json(req.session.loggedInUser);
+});
 
   module.exports = router;

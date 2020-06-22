@@ -1,6 +1,5 @@
 const isLoggedIn = (req, res, next) => {
-  console.log(req.session)  
-  console.log(res.session)
+  console.log('Middleware', req.session)  
   if (req.session.loggedInUser) next();
   else {
       res.status(401).json({
