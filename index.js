@@ -51,8 +51,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //Register routes
-const todoRoutes = require('./routes/todo.routes');
-app.use('/api', todoRoutes);
+const shelterRoutes = require('./routes/shelter.routes');
+app.use('/api', shelterRoutes);
+
+const userRoutes = require('./routes/user.routes');
+app.use('/api', userRoutes);
 
 const authRoutes = require('./routes/auth.routes')
 app.use('/api', authRoutes);

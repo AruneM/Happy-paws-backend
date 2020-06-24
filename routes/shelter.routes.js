@@ -6,8 +6,8 @@ const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is
 
 router.get('/shelter/animals', (req, res) => {
      PetModel.find()
-          .then((todos) => {
-               res.status(200).json(todos)
+          .then((animals) => {
+               res.status(200).json(animals)
           })
           .catch((err) => {
                res.status(500).json({
