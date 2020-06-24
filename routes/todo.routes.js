@@ -4,7 +4,7 @@ const router = express.Router()
 let PetModel = require('../models/Pet.model')
 const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
 
-router.get('/animals', (req, res) => {
+router.get('/shelter/animals', (req, res) => {
      PetModel.find()
           .then((todos) => {
                res.status(200).json(todos)
@@ -32,7 +32,7 @@ router.post('/create', isLoggedIn, (req, res) => {
           })  
 })
 
-router.get('/animal/:myId', isLoggedIn, (req, res) => {
+router.get('/shelter/animal/:myId', isLoggedIn, (req, res) => {
     PetModel.findById(req.params.myId)
      .then((response) => {
           res.status(200).json(response)
@@ -45,7 +45,7 @@ router.get('/animal/:myId', isLoggedIn, (req, res) => {
      }) 
 })
 
-router.delete('/animal/:id', isLoggedIn, (req, res) => {
+router.delete('/shelter/animal/:id', isLoggedIn, (req, res) => {
     PetModel.findByIdAndDelete(req.params.id)
           .then((response) => {
                res.status(200).json(response)
@@ -58,7 +58,7 @@ router.delete('/animal/:id', isLoggedIn, (req, res) => {
           })  
 })
 
-router.patch('/animals/:id', isLoggedIn, (req, res) => {
+router.patch('/shelter/animal/:id', isLoggedIn, (req, res) => {
     let id = req.params.id
     const {name, description, completed} = req.body;
     PetModel.findByIdAndUpdate(id, {$set: {name: name, description: description, completed: completed}})

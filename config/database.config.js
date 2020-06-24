@@ -6,7 +6,7 @@ let configOptions = {
     useUnifiedTopology: true 
 }
 
-let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ReactTodos'
+let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/HappyPaws'
 
 mongoose.connect(MONGODB_URI, configOptions)
     .then(() => {
