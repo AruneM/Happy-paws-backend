@@ -65,6 +65,6 @@ app.use((req, res, next) => {
 //Start the server to begin listening on a port
 // make sure you don't run it on port 3000 because 
 // your react app uses port 3000. 
-app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
     console.log('Server is running')
 })
