@@ -4,18 +4,18 @@ const router = express.Router()
 //we installed bcrypt.js
 const bcrypt = require('bcryptjs');
 
-const UserModel = require('../models/User.model');
+const ShelterModel = require('../models/Shelter.model');
 
 const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
 
-router.post('/signup', (req, res) => {
-    const {username, email, password } = req.body;
-    console.log(username, email, password);
+router.post('/shelter/signup', (req, res) => {
+    const {full_name, email, password, shelter_name, location, description, url} = req.body;
+    // console.log(username, email, password);
  
-    if (!username || !email || !password) {
+    if (!full_name || !email || !password) {
         res.status(500)
           .json({
-            errorMessage: 'Please enter username, email and password'
+            errorMessage: 'Please enter full name, email and password'
           });
         return;  
     }
@@ -43,7 +43,7 @@ router.post('/signup', (req, res) => {
         console.log('Salt: ', salt);
         bcrypt.hash(password, salt)
           .then((passwordHash) => {
-            UserModel.create({email, username, passwordHash})
+            ShelterModel.create({full_name, email, shelter_name, location, description, url, passwordHash})
               .then((user) => {
                 user.passwordHash = "***";
                 req.session.loggedInUser = user;
@@ -54,7 +54,7 @@ router.post('/signup', (req, res) => {
                 if (err.code === 11000) {
                   res.status(500)
                   .json({
-                    errorMessage: 'username or email entered already exists!'
+                    errorMessage: 'name or email entered already exists!'
                   });
                   return;  
                 } 
@@ -75,7 +75,7 @@ router.post('/signin', (req, res) => {
     const {email, password } = req.body;
     if ( !email || !password) {
         res.status(500).json({
-            error: 'Please enter Username. email and password',
+            error: 'Please enter name, email and password',
        })
       return;  
     }
@@ -88,7 +88,7 @@ router.post('/signin', (req, res) => {
     }
   
     // Find if the user exists in the database 
-    UserModel.findOne({email})
+    ShelterModel.findOne({email})
       .then((userData) => {
            //check if passwords match
           bcrypt.compare(password, userData.passwordHash)

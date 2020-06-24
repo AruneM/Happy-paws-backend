@@ -32,7 +32,7 @@ router.post('/create', isLoggedIn, (req, res) => {
           })  
 })
 
-router.get('/shelter/animal/:myId', isLoggedIn, (req, res) => {
+router.get('/shelter/animal/:myId', (req, res) => {
     PetModel.findById(req.params.myId)
      .then((response) => {
           res.status(200).json(response)
