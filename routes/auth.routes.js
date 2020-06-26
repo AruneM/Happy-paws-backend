@@ -79,7 +79,7 @@ router.post('/shelter/signup', (req, res) => {
 //AUTH ROUTER FOR USER
 router.post('/user/application', (req, res) => {
   const {fullName, email, password, phone, location, job, livingPlace, otherowned, availability} = req.body;
-  console.log(username, email, passwordHash);
+  console.log(fullName, email, password);
   
   // if any field is left empty
   if (!fullName || !email || !password || !phone || !location || !job || !livingPlace || !otherowned || !availability) {
@@ -113,14 +113,15 @@ router.post('/user/application', (req, res) => {
       console.log('Salt: ', salt);
       bcrypt.hash(password, salt)
         .then((passwordHash) => {
-          User.model.create({fullname, email, passwordHash, phone, location, job, livingPlace, otherowned, availability })
-            .then((shelter) => {
-              user.passwordHash = "***";
-              req.session.loggednInAdopt = shelter;
+          UserModel.create({fullName, email, passwordHash, phone, location, job, livingPlace, otherowned, availability })
+            .then((adopter) => {
+              adopter.passwordHash = "***";
+              req.session.loggedInUser = adopter;
               console.log(req.session)
-              res.status(200).json(shelter);
+              res.status(200).json(adopter);
             })
             .catch((err) => {
+              console.log(err)
               if (err.code === 11000) {
                 res.status(500)
                 .json({
@@ -208,7 +209,7 @@ router.get("/user", isLoggedIn, (req, res, next) => {
   res.status(200).json(req.session.loggedInUser);
 });
 router.get("/adopter", isLoggedInAdopter, (req, res, next) => {
-  res.status(200).json(req.session.loggednInAdopt);
+  res.status(200).json(req.session.loggedInUser);
 });
 
   module.exports = router;
