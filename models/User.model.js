@@ -7,15 +7,15 @@ let UserSchema = new mongoose.Schema(
     location: {type: String, required: true},
     passwordHash: {type: String, required: true},
     phone : {type: String, required: true, unique: true},
-    job: {enum: ['full-time', 'part-time', 'no job', 'remote']},
-    livingPlace: {enum: ['house with garden', 'apartment with garden', 'rented apartment', 'rented house', 'owned apartment', 'owned house']},
-    have: {enum: ['dogs', 'cats', 'children', 'other']},
+    job: {type: String, required: true},
+    livingPlace: {type: String, required: true},
+    otherowned: {type: String, required: true},
     availability: {type: Number, required: true},
     favorites: ['ObjectID puppiest'],
   },
-  {
-    timestamps: true
-  }
+  // {
+  //   timestamps: true
+  // }
 );
 
 let UserModel = mongoose.model('user', UserSchema)
