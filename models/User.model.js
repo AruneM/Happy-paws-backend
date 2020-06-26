@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-const userSchema = new Schema(
+let UserSchema = new mongoose.Schema(
   {
     fullName: {type: String, required: [true, 'Please enter full name'], unique: true},
     email: {type: String, required: [true, 'Please enter email'], unique: true},
@@ -17,6 +17,7 @@ const userSchema = new Schema(
     timestamps: true
   }
 );
-userSchema.index({ 'email': 1}, {unique: true});
-userSchema.index({ 'fullName': 1}, {unique: true});
- module.exports = model('User', userSchema);
+
+let UserModel = mongoose.model('user', UserSchema)
+
+module.exports = UserModel;
