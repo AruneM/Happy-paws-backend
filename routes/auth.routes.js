@@ -12,68 +12,70 @@ const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is
 
 //AUTH ROUTES FOR SHELTER
 router.post('/shelter/signup', (req, res) => {
-    const {shelter_name, email, password, phone, location, description, url} = req.body;
-    // console.log(username, email, password);
-    
-    // if any field is left empty
-    if (!shelter_name || !email || !password || !phone || !location || !description || !url) {
-        res.status(500)
-          .json({
-            errorMessage: 'Please enter full name, email and password'
-          });
-        return;  
-    }
-
-    const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
-    if (!myRegex.test(email)) {
-        res.status(500)
-          .json({
-            errorMessage: 'Email format not correct'
-        });
-        return;  
-    }
-
-    const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
-    if (!myPassRegex.test(password)) {
+  const {shelter_name, email, password, phone, location, description, url} = req.body;
+  // console.log(username, email, password);
+  
+  // if any field is left empty
+  if (!shelter_name || !email || !password || !phone || !location || !description || !url) {
       res.status(500)
-          .json({
-            errorMessage: 'Password needs to have 8 characters, a number and an Uppercase alphabet'
-          });
-        return;  
-    }
+        .json({
+          errorMessage: 'Please enter full name, email and password'
+        });
+      return;  
+  }
 
-    bcrypt.genSalt(12)
-      .then((salt) => {
-        console.log('Salt: ', salt);
-        bcrypt.hash(password, salt)
-          .then((passwordHash) => {
-            ShelterModel.create({shelter_name, email, phone, location, description, url, passwordHash})
-              .then((user) => {
-                user.passwordHash = "***";
-                req.session.loggedInUser = user;
-                console.log(req.session)
-                res.status(200).json(user);
-              })
-              .catch((err) => {
-                if (err.code === 11000) {
-                  res.status(500)
-                  .json({
-                    errorMessage: 'name or email entered already exists!'
-                  });
-                  return;  
-                } 
-                else {
-                  res.status(500)
-                  .json({
-                    errorMessage: 'Something went wrong! Go to sleep!'
-                  });
-                  return; 
-                }
-              })
-          });  
-  });
+  const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
+  if (!myRegex.test(email)) {
+      res.status(500)
+        .json({
+          errorMessage: 'Email format not correct'
+      });
+      return;  
+  }
+
+  const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
+  if (!myPassRegex.test(password)) {
+    res.status(500)
+        .json({
+          errorMessage: 'Password needs to have 8 characters, a number and an Uppercase alphabet'
+        });
+      return;  
+  }
+
+  bcrypt.genSalt(12)
+    .then((salt) => {
+      console.log('Salt: ', salt);
+      bcrypt.hash(password, salt)
+        .then((passwordHash) => {
+          ShelterModel.create({shelter_name, email, phone, location, description, url, passwordHash})
+            .then((user) => {
+              user.passwordHash = "***";
+              req.session.loggedInUser = user;
+              console.log(req.session)
+              res.status(200).json(user);
+            })
+            .catch((err) => {
+              if (err.code === 11000) {
+                res.status(500)
+                .json({
+                  errorMessage: 'name or email entered already exists!'
+                });
+                return;  
+              } 
+              else {
+                res.status(500)
+                .json({
+                  errorMessage: 'Something went wrong! Go to sleep!'
+                });
+                return; 
+              }
+            })
+        });  
+});
 
 });
+
+
 
 
 //AUTH ROUTER FOR USER
