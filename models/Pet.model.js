@@ -12,7 +12,7 @@ let PetSchema = new mongoose.Schema( {
     good_with: {enum: ['dogs', 'cats', 'children', 'all', 'none']},
     bad_with: {enum: ['dogs', 'cats', 'children', 'all', 'none']},
     needs_time: {type: Number, required: true},
-    image: {type: String, required: true},
+    image: {type: String},
     description: {type: String, required: true},
     funfact: {type: String},
     location: {type: String, required: true},
