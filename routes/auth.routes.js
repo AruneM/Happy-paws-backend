@@ -76,7 +76,7 @@ router.post('/shelter/signup', (req, res) => {
 
 //AUTH ROUTER FOR USER
 router.post('/user/application', (req, res) => {
-  const {full_name, email, passwordHash, phone, job, livingPlace, have, availability} = req.body;
+  const {fullName, email, passwordHash, phone, job, livingPlace, have, availability} = req.body;
   // console.log(username, email, passwordHash);
   
   // if any field is left empty
