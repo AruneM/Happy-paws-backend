@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 let ShelterSchema = new mongoose.Schema({
-    full_name: {type: String, required: true, unique: true},
+    shelter_name: {type: String, required: true, unique: true},
     email: {type: String, required: true, unique: true},
     passwordHash: {type: String, required: true},
-    shelter_name: {type: String, required: true},
+    phone: {type: String, required: true},
     location:{type: String, required: true}, 
     description: {type: String, required: true},
     url: {type: String, required: true},
