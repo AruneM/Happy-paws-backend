@@ -204,6 +204,12 @@ router.post('/logout', (req, res) => {
     .status(204) //  No Content
     .send();
 })
+router.post('/user/logout', (req, res) => {
+  req.session.destroy();
+  res
+  .status(204) //  No Content
+  .send();
+})
 
 router.get("/user", isLoggedIn, (req, res, next) => {
   res.status(200).json(req.session.loggedInUser);
