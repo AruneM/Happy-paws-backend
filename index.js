@@ -41,6 +41,10 @@ app.use(logger('dev'));
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+// Upload Images 
+const fileUploads = require('./routes/file-upload.routes')
+app.use('/api', fileUploads  )
+
 //Use body parser. To be able parse post request information
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
