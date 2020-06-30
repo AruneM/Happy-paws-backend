@@ -11,7 +11,9 @@ let UserSchema = new mongoose.Schema(
     livingPlace: {type: String, required: true},
     otherowned: {type: String, required: true},
     availability: {type: Number, required: true},
-    favorites: ['ObjectID puppiest'],
+    likedDogs: [{
+      type: mongoose.Schema.Types.ObjectId, ref: 'pet'
+    }],
   },
   // {
   //   timestamps: true
