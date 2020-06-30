@@ -11,6 +11,7 @@ router.get('/shelter/animals', (req, res) => {
                res.status(200).json(animals)
           })
           .catch((err) => {
+               console.log(err)
                res.status(500).json({
                     error: 'Something went wrong',
                     message: err
