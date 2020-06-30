@@ -142,17 +142,17 @@ router.post('/user/application', (req, res) => {
 
 });
  
-router.post('/signin', (req, res) => {
+router.post('/shelter/signin', (req, res) => {
     const {email, password } = req.body;
     if ( !email || !password) {
-        res.status(500).json({
+        res.status(502).json({
             error: 'Please enter name, email and password',
        })
       return;  
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(500).json({
+        res.status(503).json({
             error: 'Email format not correct',
         })
         return;  
@@ -174,14 +174,14 @@ router.post('/signin', (req, res) => {
                 }
                 //if passwords do not match
                 else {
-                    res.status(500).json({
+                    res.status(502).json({
                         error: 'Passwords don\'t match',
                     })
                   return; 
                 }
             })
             .catch(() => {
-                res.status(500).json({
+                res.status(502).json({
                     error: 'Email format not correct',
                 })
               return; 
@@ -189,7 +189,7 @@ router.post('/signin', (req, res) => {
       })
       //throw an error if the user does not exists 
       .catch((err) => {
-        res.status(500).json({
+        res.status(501).json({
             error: 'Email format not correct',
             message: err
         })
@@ -198,7 +198,7 @@ router.post('/signin', (req, res) => {
   
 });
  
-router.post('/logout', (req, res) => {
+router.post('/shelter/logout', (req, res) => {
     req.session.destroy();
     res
     .status(204) //  No Content
