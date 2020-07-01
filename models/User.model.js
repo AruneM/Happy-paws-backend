@@ -12,7 +12,7 @@ let UserSchema = new mongoose.Schema(
     otherowned: {type: String, required: true},
     availability: {type: Number, required: true},
     likedDogs: [{
-      type: mongoose.Schema.Types.ObjectId, ref: 'pet'
+      type: mongoose.Schema.Types.ObjectId, ref: 'pet', unique: true
     }],
   },
   // {
