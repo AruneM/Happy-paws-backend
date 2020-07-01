@@ -116,7 +116,7 @@ router.post('/user/application', (req, res) => {
           UserModel.create({fullName, email, passwordHash, phone, location, job, livingPlace, otherowned, availability })
             .then((adopter) => {
               adopter.passwordHash = "***";
-              req.session.loggedInUser = adopter;
+              req.session.loggednInAdopt = adopter;
               console.log(req.session)
               res.status(200).json(adopter);
             })
@@ -262,17 +262,11 @@ router.post('/shelter/signin', (req, res) => {
   
 });
  
-router.post('/shelter/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     req.session.destroy();
     res
     .status(204) //  No Content
     .send();
-})
-router.post('/user/logout', (req, res) => {
-  req.session.destroy();
-  res
-  .status(204) //  No Content
-  .send();
 })
 
 router.get("/user", isLoggedIn, (req, res, next) => {
@@ -280,7 +274,7 @@ router.get("/user", isLoggedIn, (req, res, next) => {
 });
 
 router.get("/adopter", isLoggedInAdopter, (req, res, next) => {
-  res.status(200).json(req.session.loggedInUser);
+  res.status(200).json(req.session.loggednInAdopt);
 });
 
   module.exports = router;
