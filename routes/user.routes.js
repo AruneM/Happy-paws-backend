@@ -27,17 +27,15 @@ router.get('/user/favorite', isLoggedInAdopter, (req, res) => {
     const user = req.session.loggedInAdopt;
 
     let sortedItems = items.likedDogs.reduce((collection, object) => {
-      let itemType = object.itemType[0].toUpperCase() + object.itemType.substring(1) + 's';
-      if(collection[itemType]) {collection[itemType].push(object);}
+      if(collection) {collection.push(object);}
       else {
-        collection[itemType] = [];
-        collection[itemType].push(object);
+        collection = [];
+        collection.push(object);
       }
       return collection;
     }, {});
 
     res.status(200).json(items)
-    res.render('users/profile.hbs', {sortedItems, user});
   })
   .catch((err) => {
     res.status(500).json({
