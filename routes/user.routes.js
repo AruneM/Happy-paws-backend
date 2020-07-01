@@ -21,10 +21,10 @@ router.get('/user/pets', isLoggedInAdopter, (req, res) => {
 //favorite route
 router.get('/user/favorite', isLoggedInAdopter, (req, res) => {
   
-  UserModel.findById(req.session.loggednInAdopt._id)
+  UserModel.findById(req.session.loggedInAdopt._id)
   .populate('likedDogs')
   .then((items) => {
-    const user = req.session.loggednInAdopt;
+    const user = req.session.loggedInAdopt;
 
     let sortedItems = items.likedDogs.reduce((collection, object) => {
       let itemType = object.itemType[0].toUpperCase() + object.itemType.substring(1) + 's';
@@ -49,7 +49,7 @@ router.get('/user/favorite', isLoggedInAdopter, (req, res) => {
 //adding to favorites
 router.post('/user/favorite/:itemId/add', isLoggedInAdopter, (req, res, next) => {
 
-    const userId = req.session.loggednInAdopt._id;
+    const userId = req.session.loggedInAdopt._id;
     const itemId = req.params.itemId;
     UserModel.findOneAndUpdate({_id: userId}, {$push: {likedDogs: [{_id: itemId}]}})
       .then((animals) => {
@@ -66,7 +66,7 @@ router.post('/user/favorite/:itemId/add', isLoggedInAdopter, (req, res, next) =>
   
   //deleting things from favorites
 router.delete('/user/favorite/:itemId/delete', isLoggedInAdopter, (req, res, next) => {
-    const userId = req.session.loggednInAdopt._id;
+    const userId = req.session.loggedInAdopt._id;
     UserModel.updateOne({_id: userId}, {$pullAll: {likedDogs: [{_id: req.params.itemId}]}})
       .then((response) => {
         console.log('deleted');
