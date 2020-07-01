@@ -12,7 +12,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   folder: 'todo-gallery', // The name of the folder in cloudinary
-  allowedFormats: ['jpg', 'png'],
+  allowedFormats: ['jpg', 'png', 'jpeg'],
   // params: { resource_type: 'raw' }, => this is in case you want to upload other type of files, not just images
   filename: function (req, res, cb) {
     cb(null, res.originalname); // The file on cloudinary would have the same name as the original file name
