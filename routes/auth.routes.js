@@ -141,18 +141,82 @@ router.post('/user/application', (req, res) => {
 });
 
 });
+// signin user//
+router.post('/user/signup', (req, res) => {
+  const { email, password } = req.body;
+  // console.log(password, '-----------')
+  if (!email || !password) {
+    res.status(500).json({
+      error: 'Please enter username, email and password',
+    })
+    return;
+  }
+  const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
+  if (!myRegex.test(email)) {
+    res.status(500).json({
+      error: 'Email format not correct',
+    })
+    return;
+  }
+
+  // Find if the user exists in the database 
+  UserModel.findOne({ email })
+    .then((userData) => {
+      //check if passwords match
+      bcrypt.compare(password, userData.passwordHash)
+        .then((doesItMatch) => {
+          //if it matches
+          if (doesItMatch) {
+            // req.session is the special object that is available to you
+            userData.passwordHash = "***";
+            req.session.loggedInUser = userData;
+            console.log('Signin', req.session)
+            res.status(200).json(userData)
+          }
+          //if passwords do not match
+          else {
+            console.log('Doesn\'t match')
+            res.status(500).json({
+              error: 'Passwords don\'t match',
+            })
+            return;
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          res.status(500).json({
+            error: 'Email format not correct',
+          })
+          return;
+        });
+    })
+    //throw an error if the user does not exists 
+    .catch((err) => {
+      console.log(err, '2nd catch')
+      res.status(500).json({
+        error: 'Email format not correct',
+        message: err
+      })
+      return;
+    });
+
+});
+
+
+
+
  
 router.post('/shelter/signin', (req, res) => {
     const {email, password } = req.body;
     if ( !email || !password) {
-        res.status(502).json({
+        res.status(500).json({
             error: 'Please enter name, email and password',
        })
       return;  
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(503).json({
+        res.status(500).json({
             error: 'Email format not correct',
         })
         return;  
@@ -214,6 +278,7 @@ router.post('/user/logout', (req, res) => {
 router.get("/user", isLoggedIn, (req, res, next) => {
   res.status(200).json(req.session.loggedInUser);
 });
+
 router.get("/adopter", isLoggedInAdopter, (req, res, next) => {
   res.status(200).json(req.session.loggedInUser);
 });
