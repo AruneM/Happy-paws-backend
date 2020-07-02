@@ -20,9 +20,9 @@ router.get('/shelter/animals', isLoggedIn, (req, res) => {
 })
 
 router.post('/create', isLoggedIn, (req, res) => {
-    const {name, breed, color, age, height, weight, image, description, funfact, location, hair_length, available_housing, good_with, bad_with, needs_time} = req.body;
+    const {name, breed, color, age, height, weight, image, description, funfact, location, hair_length, available_housing, good_with, bad_with, needs_time, contact} = req.body;
 //     console.log(req.body)
-    PetModel.create({name: name, description: description, breed: breed, color: color, age: age, height: height, weight: weight, hair_length: hair_length, available_housing: available_housing, good_with: good_with, bad_with: bad_with, needs_time: needs_time, image: image, funfact: funfact, location: location})
+    PetModel.create({name: name, description: description, breed: breed, color: color, age: age, height: height, weight: weight, hair_length: hair_length, available_housing: available_housing, good_with: good_with, bad_with: bad_with, needs_time: needs_time, image: image, funfact: funfact, location: location, contact: contact})
           .then((response) => {
                res.status(200).json(response)
           })
@@ -62,8 +62,8 @@ router.delete('/shelter/animal/:id', isLoggedIn, (req, res) => {
 
 router.patch('/shelter/animal/:id', isLoggedIn, (req, res) => {
     let id = req.params.id
-    const {name, breed, color, age, height, weight, hair_length, available_housing, good_with, bad_with, needs_time, image, description, funfact, location} = req.body;
-    PetModel.findByIdAndUpdate(id, {$set: {name: name, description: description, breed: breed, color: color, age: age, height: height, weight: weight, hair_length: hair_length, available_housing: available_housing, good_with: good_with, bad_with: bad_with, needs_time: needs_time, image: image, funfact: funfact, location: location}})
+    const {name, breed, color, age, height, weight, hair_length, available_housing, good_with, bad_with, needs_time, image, description, funfact, location, contact} = req.body;
+    PetModel.findByIdAndUpdate(id, {$set: {name: name, description: description, breed: breed, color: color, age: age, height: height, weight: weight, hair_length: hair_length, available_housing: available_housing, good_with: good_with, bad_with: bad_with, needs_time: needs_time, image: image, funfact: funfact, location: location, contact: contact}})
           .then((response) => {
                res.status(200).json(response)
           })
